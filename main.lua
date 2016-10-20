@@ -4,23 +4,60 @@ function love.load()
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
 	mapgen = {length = 50, depth = 50} --the length and depth of the map in blocks, as required by the map generator
 
+	--physics
+	love.physics.setMeter(100) --the height of a meter our worlds will be 64px
+	world = love.physics.newWorld(0, 9.81*64, true) --create a world for the bodies to exist in with horizontal gravity of 0 and vertical gravity of 9.81
+
 	--map gen
 	curLength = 0
 	while curLength < mapgen.length do
 		curDepth = 0
 		while curDepth < mapgen.depth do
-			table.insert(map, {x = curLength*blockSize.x, y = curDepth*blockSize.y})
+			table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, curDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
+			map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
+			map[table.maxn(map)].fixture:setFriction(0.8)
 			curDepth = curDepth + 1
 		end
 		curLength = curLength + 1
 	end
-	--random variables
+
 	cam = {x = 0, y = 0}
-	player = {x = (mapgen.length*(blockSize.x/2)), y = 150, moveSpeed = 6}
+	--player = {x = 0, y = (mapgen.depth*blockSize.y)/2, moveSpeed = 6}
+	player = {} --Setup player physics
+	player.body = love.physics.newBody(world, 0, -400, "dynamic")
+	player.shape = love.physics.newCircleShape(45)
+	player.fixture = love.physics.newFixture(player.body, player.shape, 1)
+	player.fixture:setFriction(1)
+	player.body:setFixedRotation(false)
+
+	jumpCooldown = 0.5 --jump cooldown in seconds
+	jumpCountdown = 0 --counter for said jump, don't touch
 end
 
 function love.update(dt) --dt = delta time, used for framerate-independent timing
-	if love.keyboard.isDown("w") then --move player around in the y direction
+	world:update(dt)
+	if jumpCountdown > 0 then
+		jumpCountdown = jumpCountdown - dt
+	end
+	if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
+		--jump
+		if jumpCountdown <= 0 then
+			player.body:applyForce(0, -20000)
+			jumpCountdown = jumpCooldown
+		end
+	elseif love.keyboard.isDown("s") then
+		--crouch
+	end
+	if love.keyboard.isDown("a") then
+		player.body:applyForce(-250, 0)
+		playerMirrored = false
+	elseif love.keyboard.isDown("d") then
+		player.body:applyForce(250, 0)
+		playerMirrored = true
+	end
+	cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
+	
+	--[[if love.keyboard.isDown("w") then --move player around in the y direction
 		player.y = player.y + player.moveSpeed*(dt*60)
 	elseif love.keyboard.isDown("s") then
 		player.y = player.y - player.moveSpeed*(dt*60)
@@ -32,13 +69,14 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		player.x = player.x - player.moveSpeed*(dt*60)
 	end
 
-	cam.x, cam.y = player.x, player.y --set the camera to the player
+	cam.x, cam.y = player.x, player.y --set the camera to the player]]
 end
 
 function love.draw()
 	for i,v in ipairs(map) do
-		love.graphics.rectangle("line", v.x + cam.x, v.y + cam.y, 50, 50) --draw blocks
+		love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y, blockSize.x, blockSize.y)
+		--love.graphics.rectangle("line", v.x + cam.x, v.y + cam.y, 50, 50) --draw blocks
 	end
-	love.graphics.rectangle("line", love.graphics.getWidth()/2, love.graphics.getHeight()/2, 45, 95)
-	love.graphics.print(player.x..player.y)
+	love.graphics.circle("line", player.body:getX() + cam.x - 10, player.body:getY() + cam.y + 20, 45)
+	--love.graphics.print(player.x..player.y)
 end
