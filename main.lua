@@ -16,7 +16,7 @@ function love.load()
 	end
 	--random variables
 	cam = {x = 0, y = 0}
-	player = {x = 0, y = 0, moveSpeed = 6}
+	player = {x = (mapgen.length*(blockSize.x/2)), y = 150, moveSpeed = 6}
 end
 
 function love.update(dt) --dt = delta time, used for framerate-independent timing
@@ -39,4 +39,6 @@ function love.draw()
 	for i,v in ipairs(map) do
 		love.graphics.rectangle("line", v.x + cam.x, v.y + cam.y, 50, 50) --draw blocks
 	end
+	love.graphics.rectangle("line", love.graphics.getWidth()/2, love.graphics.getHeight()/2, 45, 95)
+	love.graphics.print(player.x..player.y)
 end
