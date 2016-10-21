@@ -1,4 +1,7 @@
 function love.load()
+
+lovernetlib = require("lovernet")
+
 	blockSize = {x = 50, y = 50}
 
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
@@ -42,7 +45,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 	if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
 		--jump
 		if jumpCountdown <= 0 then
-			player.body:applyForce(0, -20000)
+			player.body:applyForce(0, -15000)
 			jumpCountdown = jumpCooldown
 		end
 	elseif love.keyboard.isDown("s") then
