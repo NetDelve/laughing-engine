@@ -1,4 +1,21 @@
+function round(num, idp)
+  local mult = 10^(idp or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+function isBlockAtLocation(x, y)
+	for i,v in ipairs(map) do
+		if v.body:getX() == x and v.body:getY() == y then
+			return i, true
+		end
+	end
+	return false
+end
+
 function love.load()
+
+lovernetlib = require("lovernet")
+
 	blockSize = {x = 50, y = 50}
 
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
@@ -42,7 +59,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 	if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
 		--jump
 		if jumpCountdown <= 0 then
-			player.body:applyForce(0, -20000)
+			player.body:applyForce(0, -15000)
 			jumpCountdown = jumpCooldown
 		end
 	elseif love.keyboard.isDown("s") then
@@ -54,6 +71,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 	elseif love.keyboard.isDown("d") then
 		player.body:applyForce(250, 0)
 		playerMirrored = true
+    
 	end
 	cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
 	
@@ -77,15 +95,19 @@ function love.draw()
 		love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y, blockSize.x, blockSize.y)
 		--love.graphics.rectangle("line", v.x + cam.x, v.y + cam.y, 50, 50) --draw blocks
 	end
-	love.graphics.circle("line", player.body:getX() + cam.x - 10, player.body:getY() + cam.y + 20, 45)
+	love.graphics.circle("line", player.body:getX() + cam.x, player.body:getY() + cam.y, player.shape:getRadius())
 	--love.graphics.print(player.x..player.y)
 end
 
 
 
 function love.mousepressed( x, y, button, istouch )
-	table.insert(map, {body = love.physics.newBody(world, x-cam.x, y-cam.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
-	map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
-	map[table.maxn(map)].fixture:setFriction(1)
-	print((x*blockSize.x)+cam.x)
+	xRound, yRound = blockSize.x*round(x/blockSize.x, 0), blockSize.y*round(y/blockSize.y, 0)
+	camXRound, camYRound = blockSize.x*round(cam.x/blockSize.x, 0), blockSize.y*round(cam.y/blockSize.y, 0)
+	print(xRound-camXRound)
+	if button == 1 then
+		table.insert(map, {body = love.physics.newBody(world, xRound - camXRound, yRound - camYRound, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
+		map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
+		map[table.maxn(map)].fixture:setFriction(1)
+	end
 end
