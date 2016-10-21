@@ -54,6 +54,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 	elseif love.keyboard.isDown("d") then
 		player.body:applyForce(250, 0)
 		playerMirrored = true
+    
 	end
 	cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
 	
