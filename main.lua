@@ -6,7 +6,7 @@ function love.load()
 
 	--physics
 	love.physics.setMeter(100) --the height of a meter our worlds will be 64px
-	world = love.physics.newWorld(0, 9.81*64, true) --create a world for the bodies to exist in with horizontal gravity of 0 and vertical gravity of 9.81
+	world = love.physics.newWorld(0, 9.81*100, true) --create a world for the bodies to exist in with horizontal gravity of 0 and vertical gravity of 9.81
 
 	--map gen
 	curLength = 0
@@ -15,7 +15,7 @@ function love.load()
 		while curDepth < mapgen.depth do
 			table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, curDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
 			map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
-			map[table.maxn(map)].fixture:setFriction(0.8)
+			map[table.maxn(map)].fixture:setFriction(1)
 			curDepth = curDepth + 1
 		end
 		curLength = curLength + 1
@@ -79,4 +79,13 @@ function love.draw()
 	end
 	love.graphics.circle("line", player.body:getX() + cam.x - 10, player.body:getY() + cam.y + 20, 45)
 	--love.graphics.print(player.x..player.y)
+end
+
+
+
+function love.mousepressed( x, y, button, istouch )
+	table.insert(map, {body = love.physics.newBody(world, x-cam.x, y-cam.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
+	map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
+	map[table.maxn(map)].fixture:setFriction(1)
+	print((x*blockSize.x)+cam.x)
 end
