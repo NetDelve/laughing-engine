@@ -20,6 +20,7 @@ function love.load()
 	images.dirt = love.graphics.newImage("dirt.png")
 	images.grass = love.graphics.newImage("grass.png")
 	images.stone = love.graphics.newImage("stone.png")
+	images.player = love.graphics.newImage("player.png")
 
 	blockSize = {x = 50, y = 50}
 
@@ -54,10 +55,10 @@ function love.load()
 	cam = {x = 0, y = 0}
 	player = {} --Setup player physics
 	player.body = love.physics.newBody(world, 0, -400, "dynamic")
-	player.shape = love.physics.newCircleShape(45)
+	player.shape = love.physics.newRectangleShape(45, 140)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 1)
-	player.fixture:setFriction(1)
-	player.body:setFixedRotation(false)
+	player.fixture:setFriction(0.8)
+	player.body:setFixedRotation(true)
 
 	jumpCooldown = 0.5 --jump cooldown in seconds
 	jumpCountdown = 0 --counter for said jump, don't touch
@@ -78,10 +79,10 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		--crouch
 	end
 	if love.keyboard.isDown("a") then
-		player.body:applyForce(-250, 0)
+		player.body:applyForce(-1000, 0)
 		playerMirrored = false
 	elseif love.keyboard.isDown("d") then
-		player.body:applyForce(250, 0)
+		player.body:applyForce(1000, 0)
 		playerMirrored = true
     
 	end
@@ -92,7 +93,7 @@ function love.draw()
 	for i,v in ipairs(map) do
 		love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
 	end
-	love.graphics.circle("line", player.body:getX() + cam.x, player.body:getY() + cam.y, player.shape:getRadius())
+	love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
 end
 
 
