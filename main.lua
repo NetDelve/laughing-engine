@@ -18,6 +18,8 @@ function love.load()
 
 	images = {}
 	images.dirt = love.graphics.newImage("dirt.png")
+	images.grass = love.graphics.newImage("grass.png")
+	images.stone = love.graphics.newImage("stone.png")
 
 	blockSize = {x = 50, y = 50}
 
@@ -36,13 +38,20 @@ function love.load()
 			table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, curDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
 			map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
 			map[table.maxn(map)].fixture:setFriction(1)
+
+			if curDepth <= 0 then
+				map[table.maxn(map)].sprite = images.grass
+			elseif curDepth > 0 and curDepth <=5 then
+				map[table.maxn(map)].sprite = images.dirt
+			else
+				map[table.maxn(map)].sprite = images.stone
+			end
 			curDepth = curDepth + 1
 		end
 		curLength = curLength + 1
 	end
 
 	cam = {x = 0, y = 0}
-	--player = {x = 0, y = (mapgen.depth*blockSize.y)/2, moveSpeed = 6}
 	player = {} --Setup player physics
 	player.body = love.physics.newBody(world, 0, -400, "dynamic")
 	player.shape = love.physics.newCircleShape(45)
@@ -77,29 +86,13 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
     
 	end
 	cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
-	
-	--[[if love.keyboard.isDown("w") then --move player around in the y direction
-		player.y = player.y + player.moveSpeed*(dt*60)
-	elseif love.keyboard.isDown("s") then
-		player.y = player.y - player.moveSpeed*(dt*60)
-	end
-
-	if love.keyboard.isDown("a") then --move player around in the x direction
-		player.x = player.x + player.moveSpeed*(dt*60)
-	elseif love.keyboard.isDown("d") then
-		player.x = player.x - player.moveSpeed*(dt*60)
-	end
-
-	cam.x, cam.y = player.x, player.y --set the camera to the player]]
 end
 
 function love.draw()
 	for i,v in ipairs(map) do
-		love.graphics.draw(images.dirt, v.body:getX() + cam.x, v.body:getY() + cam.y)
-		--love.graphics.rectangle("line", v.x + cam.x, v.y + cam.y, 50, 50) --draw blocks
+		love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
 	end
 	love.graphics.circle("line", player.body:getX() + cam.x, player.body:getY() + cam.y, player.shape:getRadius())
-	--love.graphics.print(player.x..player.y)
 end
 
 
