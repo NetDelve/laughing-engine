@@ -25,7 +25,7 @@ function love.load()
 	blockSize = {x = 50, y = 50}
 
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
-	mapgen = {length = 50, depth = 50} --the length and depth of the map in blocks, as required by the map generator
+	mapgen = {length = 100, depth = 50} --the length and depth of the map in blocks, as required by the map generator
 
 	--physics
 	love.physics.setMeter(100) --the height of a meter our worlds will be 64px
@@ -90,10 +90,15 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 end
 
 function love.draw()
+	love.graphics.setBackgroundColor(135, 206, 235)
 	for i,v in ipairs(map) do
 		love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
 	end
-	love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+	if not playerMirrored then
+		love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+	else
+		love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+	end
 end
 
 
