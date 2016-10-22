@@ -15,6 +15,12 @@ end
 function love.load()
 
 	lovernetlib = require("lovernet")
+  
+  server = require "server"
+  
+  if headless then server.start() return end
+  
+  client = require "client"
 
 	images = {}
 	images.dirt = love.graphics.newImage("dirt.png") --Note: Love2D will give a error if it can't find the image file(s), so if there's an error around here, that's probably why.

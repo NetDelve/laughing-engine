@@ -14,3 +14,10 @@ function server.stop()
   server_data.lovernet:disconnect()
   server_data = nil
 end
+
+function server.draw()
+  love.graphics.setColor(255,255,255,63)
+  love.graphics.print(
+    "Server hosting on: " ..
+      server_data.lovernet:getIp()..":"..server_data.lovernet:getPort())
+end
