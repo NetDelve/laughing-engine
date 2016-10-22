@@ -105,5 +105,6 @@ function love.mousepressed( x, y, button, istouch )
 		table.insert(map, {body = love.physics.newBody(world, xRound - camXRound, yRound - camYRound, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
 		map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
 		map[table.maxn(map)].fixture:setFriction(1)
+		map[table.maxn(map)].sprite = images.stone
 	end
 end
