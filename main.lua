@@ -14,7 +14,10 @@ end
 
 function love.load()
 
-lovernetlib = require("lovernet")
+	lovernetlib = require("lovernet")
+
+	images = {}
+	images.dirt = love.graphics.newImage("dirt.png")
 
 	blockSize = {x = 50, y = 50}
 
@@ -92,7 +95,7 @@ end
 
 function love.draw()
 	for i,v in ipairs(map) do
-		love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y, blockSize.x, blockSize.y)
+		love.graphics.draw(images.dirt, v.body:getX() + cam.x, v.body:getY() + cam.y)
 		--love.graphics.rectangle("line", v.x + cam.x, v.y + cam.y, 50, 50) --draw blocks
 	end
 	love.graphics.circle("line", player.body:getX() + cam.x, player.body:getY() + cam.y, player.shape:getRadius())
