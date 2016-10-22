@@ -17,7 +17,7 @@ function love.load()
 	lovernetlib = require("lovernet")
 
 	images = {}
-	images.dirt = love.graphics.newImage("dirt.png")
+	images.dirt = love.graphics.newImage("dirt.png") --Note: Love2D will give a error if it can't find the image file(s), so if there's an error around here, that's probably why.
 	images.grass = love.graphics.newImage("grass.png")
 	images.stone = love.graphics.newImage("stone.png")
 	images.player = love.graphics.newImage("player.png")
