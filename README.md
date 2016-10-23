@@ -3,27 +3,27 @@
 #Todo List
 ~ version 1.5 ~
 ## Multiplayer
-'''
-fully functioning multiplayer
-local server hosting and joining (client/server)
-name tags (usernames)
-'''
+
+- fully functioning multiplayer
+- local server hosting and joining (client/server)
+- name tags (usernames)
+
 ## Game functions
 ### Stuff
-'''
-breaking blocks
-'''
+
+- breaking blocks
+
 ### player
-'''
-health
-hunger
-'''
+
+- health
+- hunger
+
 ### items
-'''
-berries
-sticks
-'''
+
+- berries
+- sticks
+
 ## Graphics
-'''
-changeable player modes
-'''
+
+- changeable player modes
+
