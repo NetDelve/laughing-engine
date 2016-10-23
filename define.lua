@@ -1,4 +1,4 @@
-return function (1)
+return function (l)
   local version = "1.0"
   
   -- Add version info
