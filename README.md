@@ -1,22 +1,19 @@
-# laughing-engine
+#This is basicly a Terarria clone.
 
-This is pretty much terria clone
-
-to do list
-
+#Todo List
 ~ version 1.5 ~
-1. Multiplayer
-  1.1 fully functioning multiplayer
-    -local server hoasting and joining
-    -name tags
-2. Game functions
-  2.1 Stuff
-    -breaking blocks
-  2.2 player
-    -health 
-    -hunger
-  2.3 items
-    -berries
-    -sticks
-3. Graphics
--changeable player modles 
+## Multiplayer
+  ###fully functioning multiplayer
+    local server hoasting and joining
+    name tags
+## Game functions
+  ### Stuff
+    breaking blocks
+  ### player
+    health 
+    hunger
+  ### items
+    berries
+    sticks
+## Graphics
+changeable player modles 
