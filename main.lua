@@ -1,3 +1,5 @@
+require "binser"
+
 function round(num, idp)
   local mult = 10^(idp or 0)
   return math.floor(num * mult + 0.5) / mult
@@ -12,8 +14,8 @@ function isBlockAtLocation(x, y)
 	return false
 end
 
-	function love.load()
-  images = {}
+function love.load()
+ 	images = {}
 	images.dirt = love.graphics.newImage("dirt.png") --Note: Love2D will give a error if it can't find the image file(s), so if there's an error around here, that's probably why.
 	images.grass = love.graphics.newImage("grass.png")
 	images.stone = love.graphics.newImage("stone.png")
@@ -84,17 +86,26 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
     
 	end
 	cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
+
+	if player.body:getY() > mapgen.depth*blockSize.y then
+		player.body:setX(0)
+		player.body:setY(-400)
+	end
 end
 
 function love.draw()
-	love.graphics.setBackgroundColor(135, 206, 235)
-	for i,v in ipairs(map) do
-		love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
-	end
-	if not playerMirrored then
-		love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+	if not atMenu then
+		love.graphics.setBackgroundColor(135, 206, 235)
+		for i,v in ipairs(map) do
+			love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
+		end
+		if not playerMirrored then
+			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+		else
+			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+		end
 	else
-		love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+		--put menu here
 	end
 end
 
