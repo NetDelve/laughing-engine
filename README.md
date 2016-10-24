@@ -11,7 +11,7 @@
 ## Game functions
 ### Stuff
 
-- breaking blocks
+- ~~breaking blocks~~
 
 ### player
 
