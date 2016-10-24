@@ -27,6 +27,11 @@ function love.load()
 	images.health2 = love.graphics.newImage("health2.png")
 	images.health3 = love.graphics.newImage("health3.png")
 	images.health4 = love.graphics.newImage("health4.png")
+	images.hunger0 = love.graphics.newImage("hunger0.png")
+	images.hunger1 = love.graphics.newImage("hunger1.png")
+	images.hunger2 = love.graphics.newImage("hunger2.png")
+	images.hunger3 = love.graphics.newImage("hunger3.png")
+	images.hunger4 = love.graphics.newImage("hunger4.png")
 
 	blockSize = {x = 50, y = 50}
 
@@ -125,12 +130,14 @@ function love.draw()
 			end
 		end
 		if not playerMirrored then
-			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y + 25, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+			love.graphics.draw(images.player, player.body:getX() + cam.x + 25, player.body:getY() + cam.y + 25, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
 		else
-			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y + 25, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+			love.graphics.draw(images.player, player.body:getX() + cam.x + 25, player.body:getY() + cam.y + 25, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
 		end
-		
-		love.graphics.draw(images.health4, 50, love.graphics.getHeight() -50)
+		if not creativeMode then
+			love.graphics.draw(images.health4, 50, love.graphics.getHeight() -50)
+			love.graphics.draw(images.hunger4, 125, love.graphics.getHeight() -50)
+		end
 	else
 		suit.draw()
 	end
@@ -150,6 +157,7 @@ function love.mousepressed( x, y, button, istouch )
 	elseif button == 2 and not atMenu then
 		i, present = isBlockAtLocation(xRound - camXRound, yRound - camYRound)
 		if present then
+			map[i].body:destroy()
 			table.remove(map, i)
 		end
 	end
