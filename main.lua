@@ -1,6 +1,6 @@
 require "binser"
 require "LUBE"
-require "suit"
+suit = require "suit"
 
 function round(num, idp)
   local mult = 10^(idp or 0)
@@ -63,6 +63,7 @@ function love.load()
 
 	jumpCooldown = 0.5 --jump cooldown in seconds
 	jumpCountdown = 0 --counter for said jump, don't touch
+	atMenu = true
 end
 
 function love.update(dt) --dt = delta time, used for framerate-independent timing
@@ -93,6 +94,15 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		player.body:setX(0)
 		player.body:setY(-400)
 	end
+
+	if atMenu then
+		if suit.Button("Client", love.graphics.getWidth()/2-150,100, 300,30).hit then
+        	atMenu = false
+    	end
+		if suit.Button("Server", love.graphics.getWidth()/2-150,150, 300,30).hit then
+        	atMenu = false
+    	end
+	end
 end
 
 function love.draw()
@@ -107,7 +117,7 @@ function love.draw()
 			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
 		end
 	else
-		--put menu here
+		suit.draw()
 	end
 end
 
