@@ -67,39 +67,40 @@ function love.load()
 end
 
 function love.update(dt) --dt = delta time, used for framerate-independent timing
-	world:update(dt)
-	if jumpCountdown > 0 then
-		jumpCountdown = jumpCountdown - dt
-	end
-	if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
-		--jump
-		if jumpCountdown <= 0 then
-			player.body:applyForce(0, -10000)
-			jumpCountdown = jumpCooldown
+	if not atMenu then
+		world:update(dt)
+		if jumpCountdown > 0 then
+			jumpCountdown = jumpCountdown - dt
 		end
-	elseif love.keyboard.isDown("s") then
-		--crouch
-	end
-	if love.keyboard.isDown("a") then
-		player.body:applyForce(-1000, 0)
-		playerMirrored = false
-	elseif love.keyboard.isDown("d") then
-		player.body:applyForce(1000, 0)
-		playerMirrored = true
-    
-	end
-	cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
+		if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
+			--jump
+			if jumpCountdown <= 0 then
+				player.body:applyForce(0, -10000)
+				jumpCountdown = jumpCooldown
+			end
+		elseif love.keyboard.isDown("s") then
+			--crouch
+		end
+		if love.keyboard.isDown("a") then
+			player.body:applyForce(-1000, 0)
+			playerMirrored = false
+		elseif love.keyboard.isDown("d") then
+			player.body:applyForce(1000, 0)
+			playerMirrored = true
+		end
+		cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
 
-	if player.body:getY() > mapgen.depth*blockSize.y then
-		player.body:setX(0)
-		player.body:setY(-400)
-	end
-
-	if atMenu then
+		if player.body:getY() > mapgen.depth*blockSize.y then
+			player.body:setX(0)
+			player.body:setY(-400)
+		end
+	else
 		if suit.Button("Client", love.graphics.getWidth()/2-150,100, 300,30).hit then
+			--require "client"
         	atMenu = false
     	end
 		if suit.Button("Server", love.graphics.getWidth()/2-150,150, 300,30).hit then
+			--require "server"
         	atMenu = false
     	end
 	end
@@ -109,12 +110,16 @@ function love.draw()
 	if not atMenu then
 		love.graphics.setBackgroundColor(135, 206, 235)
 		for i,v in ipairs(map) do
-			love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
+			if v.sprite == images.grass then
+				love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y - 9) --grass block is a bit taller than the rest of the blocks
+			else
+				love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
+			end
 		end
 		if not playerMirrored then
-			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y + 25, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
 		else
-			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
+			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y + 25, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
 		end
 	else
 		suit.draw()
@@ -126,8 +131,7 @@ end
 function love.mousepressed( x, y, button, istouch )
 	xRound, yRound = blockSize.x*round(x/blockSize.x, 0), blockSize.y*round(y/blockSize.y, 0)
 	camXRound, camYRound = blockSize.x*round(cam.x/blockSize.x, 0), blockSize.y*round(cam.y/blockSize.y, 0)
-	print(xRound-camXRound)
-	if button == 1 then
+	if button == 1  and not atMenu then
 		table.insert(map, {body = love.physics.newBody(world, xRound - camXRound, yRound - camYRound, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
 		map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
 		map[table.maxn(map)].fixture:setFriction(1)
