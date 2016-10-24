@@ -22,6 +22,11 @@ function love.load()
 	images.grass = love.graphics.newImage("grass.png")
 	images.stone = love.graphics.newImage("stone.png")
 	images.player = love.graphics.newImage("player.png")
+	images.health0 = love.graphics.newImage("health0.png")
+	images.health1 = love.graphics.newImage("health1.png")
+	images.health2 = love.graphics.newImage("health2.png")
+	images.health3 = love.graphics.newImage("health3.png")
+	images.health4 = love.graphics.newImage("health4.png")
 
 	blockSize = {x = 50, y = 50}
 
@@ -43,7 +48,7 @@ function love.load()
 
 			if curDepth <= 0 then
 				map[table.maxn(map)].sprite = images.grass
-			elseif curDepth > 0 and curDepth <=5 then
+			elseif curDepth > 0 and curDepth <= math.random(4,7) then
 				map[table.maxn(map)].sprite = images.dirt
 			else
 				map[table.maxn(map)].sprite = images.stone
@@ -64,6 +69,9 @@ function love.load()
 	jumpCooldown = 0.5 --jump cooldown in seconds
 	jumpCountdown = 0 --counter for said jump, don't touch
 	atMenu = true
+
+	totalHealth = 100 --set both of these, as it will make totalHealth the same value as health when you die
+	health = 100
 end
 
 function love.update(dt) --dt = delta time, used for framerate-independent timing
@@ -121,6 +129,8 @@ function love.draw()
 		else
 			love.graphics.draw(images.player, player.body:getX() + cam.x, player.body:getY() + cam.y + 25, player.body:getAngle(), -1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
 		end
+		
+		love.graphics.draw(images.health4, 50, love.graphics.getHeight() -50)
 	else
 		suit.draw()
 	end
@@ -129,12 +139,18 @@ end
 
 
 function love.mousepressed( x, y, button, istouch )
+	x, y = x - 25, y - 25
 	xRound, yRound = blockSize.x*round(x/blockSize.x, 0), blockSize.y*round(y/blockSize.y, 0)
 	camXRound, camYRound = blockSize.x*round(cam.x/blockSize.x, 0), blockSize.y*round(cam.y/blockSize.y, 0)
-	if button == 1  and not atMenu then
+	if button == 1  and not atMenu  and not isBlockAtLocation(xRound - camXRound, yRound - camYRound) then
 		table.insert(map, {body = love.physics.newBody(world, xRound - camXRound, yRound - camYRound, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
 		map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
 		map[table.maxn(map)].fixture:setFriction(1)
 		map[table.maxn(map)].sprite = images.stone
+	elseif button == 2 and not atMenu then
+		i, present = isBlockAtLocation(xRound - camXRound, yRound - camYRound)
+		if present then
+			table.remove(map, i)
+		end
 	end
 end
