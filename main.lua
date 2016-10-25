@@ -28,8 +28,6 @@ function love.load()
 
 	require "images"
 
-	require "mapgen"
-
 	cam = {x = 0, y = 0}
 	player = {} --Setup player physics
 	player.body = love.physics.newBody(world, (mapgen.length*blockSize.x)/2, -400, "dynamic")
@@ -46,7 +44,8 @@ function love.load()
 
 	totalHealth = 100
 end
-
+local ipInput = {text = ""}
+local mapLengthInput = {text = "100"}
 function love.update(dt) --dt = delta time, used for framerate-independent timing
 	if not atMenu then
 		world:update(dt)
@@ -77,16 +76,17 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 			player.health = totalHealth
 		end
 	else
-		suit.Label("Server IP", {align="left"}, 50,50,200,30)
-		local input = {text = ""}
-		suit.Input(input, 125,50,150,30)
-		serverIP = input.text
+		serverIP = suit.Input(ipInput, 125,50,200,30)
+    	suit.Label("Server IP", {align="left"}, 50,50,75,30)
 		if suit.Button("Join Server", 50,100, 150,30).hit then
 			--require "client"
         	atMenu = false
     	end
-		if suit.Button("Server/Singleplayer", 50,200, 150,30).hit then
-			--require "server"
+		suit.Input(mapLengthInput, 125,200,200,30)
+    	suit.Label("Map Length", {align="left"}, 50,200,75,30)
+		mapgen.length = tonumber(mapLengthInput.text)
+		if suit.Button("Host Server", 50,250, 150,30).hit then
+			require "mapgen"
         	atMenu = false
     	end
 	end
