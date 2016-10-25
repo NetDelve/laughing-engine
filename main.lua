@@ -65,18 +65,18 @@ function love.load()
 
 	cam = {x = 0, y = 0}
 	player = {} --Setup player physics
-	player.body = love.physics.newBody(world, 0, -400, "dynamic")
+	player.body = love.physics.newBody(world, (mapgen.length*blockSize.x)/2, -400, "dynamic")
 	player.shape = love.physics.newRectangleShape(45, 140)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 1)
 	player.fixture:setFriction(0.8)
 	player.body:setFixedRotation(true)
+	player.health = 100
 
 	jumpCooldown = 0.5 --jump cooldown in seconds
 	jumpCountdown = 0 --counter for said jump, don't touch
 	atMenu = true
 
-	totalHealth = 100 --set both of these, as it will make totalHealth the same value as health when you die
-	health = 100
+	totalHealth = 100
 end
 
 function love.update(dt) --dt = delta time, used for framerate-independent timing
@@ -103,16 +103,21 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		end
 		cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
 
-		if player.body:getY() > mapgen.depth*blockSize.y then
-			player.body:setX(0)
+		if player.body:getY() > mapgen.depth*blockSize.y or player.health <= 0 then
+			player.body:setX((mapgen.length*blockSize.x)/2)
 			player.body:setY(-400)
+			player.health = totalHealth
 		end
 	else
-		if suit.Button("Client", love.graphics.getWidth()/2-150,100, 300,30).hit then
+		suit.Label("Server IP", {align="left"}, 50,50,200,30)
+		local input = {text = ""}
+		suit.Input(input, 125,50,150,30)
+		serverIP = input.text
+		if suit.Button("Join Server", 50,100, 150,30).hit then
 			--require "client"
         	atMenu = false
     	end
-		if suit.Button("Server", love.graphics.getWidth()/2-150,150, 300,30).hit then
+		if suit.Button("Server/Singleplayer", 50,200, 150,30).hit then
 			--require "server"
         	atMenu = false
     	end
@@ -161,4 +166,12 @@ function love.mousepressed( x, y, button, istouch )
 			table.remove(map, i)
 		end
 	end
+end
+
+function love.textinput(t)
+    suit.textinput(t)
+end
+
+function love.keypressed(key)
+    suit.keypressed(key)
 end
