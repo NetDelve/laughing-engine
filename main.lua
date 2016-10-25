@@ -35,33 +35,14 @@ function love.load()
 
 	blockSize = {x = 50, y = 50}
 
-	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
-	mapgen = {length = 100, depth = 50} --the length and depth of the map in blocks, as required by the map generator
-
 	--physics
 	love.physics.setMeter(100) --the height of a meter our worlds will be 64px
 	world = love.physics.newWorld(0, 9.81*100, true) --create a world for the bodies to exist in with horizontal gravity of 0 and vertical gravity of 9.81
 
-	--map gen
-	curLength = 0
-	while curLength < mapgen.length do
-		curDepth = 0
-		while curDepth < mapgen.depth do
-			table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, curDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
-			map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
-			map[table.maxn(map)].fixture:setFriction(1)
+	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
+	mapgen = {length = 100, depth = 50} --the length and depth of the map in blocks, as required by the map generator
 
-			if curDepth <= 0 then
-				map[table.maxn(map)].sprite = images.grass
-			elseif curDepth > 0 and curDepth <= math.random(4,7) then
-				map[table.maxn(map)].sprite = images.dirt
-			else
-				map[table.maxn(map)].sprite = images.stone
-			end
-			curDepth = curDepth + 1
-		end
-		curLength = curLength + 1
-	end
+	require "mapgen"
 
 	cam = {x = 0, y = 0}
 	player = {} --Setup player physics
