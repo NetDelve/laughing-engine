@@ -44,6 +44,7 @@ function love.load()
 
 	totalHealth = 100
 end
+local creativeChk = {text = ""}
 local ipInput = {text = ""}
 local mapLengthInput = {text = "100"}
 function love.update(dt) --dt = delta time, used for framerate-independent timing
@@ -78,14 +79,17 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 	else
 		serverIP = suit.Input(ipInput, 125,50,200,30)
     	suit.Label("Server IP", {align="left"}, 50,50,75,30)
-		if suit.Button("Join Server", 50,100, 150,30).hit then
+		if suit.Button("Join Server (WIP)", 50,100, 150,30).hit then
 			--require "client"
         	atMenu = false
     	end
-		suit.Input(mapLengthInput, 125,200,200,30)
-    	suit.Label("Map Length", {align="left"}, 50,200,75,30)
+		suit.Checkbox(creativeChk, 125, 200, 30, 30)
+		suit.Label("Creative", {align="left"}, 50,200,75,30)
+		creativeMode = creativeChk.checked
+		suit.Input(mapLengthInput, 125,250,200,30)
+    	suit.Label("Map Length", {align="left"}, 50,250,75,30)
 		mapgen.length = tonumber(mapLengthInput.text)
-		if suit.Button("Host Server", 50,250, 150,30).hit then
+		if suit.Button("Host Server", 50,300, 150,30).hit then
 			require "mapgen"
         	atMenu = false
     	end
