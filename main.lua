@@ -17,23 +17,7 @@ function isBlockAtLocation(x, y)
 end
 
 function love.load()
- 	images = {}
-	images.dirt = love.graphics.newImage("dirt.png") --Note: Love2D will give a error if it can't find the image file(s), so if there's an error around here, that's probably why.
-	images.grass = love.graphics.newImage("grass.png")
-	images.stone = love.graphics.newImage("stone.png")
-	images.player = love.graphics.newImage("player.png")
-	images.health0 = love.graphics.newImage("health0.png")
-	images.health1 = love.graphics.newImage("health1.png")
-	images.health2 = love.graphics.newImage("health2.png")
-	images.health3 = love.graphics.newImage("health3.png")
-	images.health4 = love.graphics.newImage("health4.png")
-	images.hunger0 = love.graphics.newImage("hunger0.png")
-	images.hunger1 = love.graphics.newImage("hunger1.png")
-	images.hunger2 = love.graphics.newImage("hunger2.png")
-	images.hunger3 = love.graphics.newImage("hunger3.png")
-	images.hunger4 = love.graphics.newImage("hunger4.png")
-
-	blockSize = {x = 50, y = 50}
+ 	blockSize = {x = 50, y = 50}
 
 	--physics
 	love.physics.setMeter(100) --the height of a meter our worlds will be 64px
@@ -41,6 +25,8 @@ function love.load()
 
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
 	mapgen = {length = 100, depth = 50} --the length and depth of the map in blocks, as required by the map generator
+
+	require "images"
 
 	require "mapgen"
 
@@ -52,6 +38,7 @@ function love.load()
 	player.fixture:setFriction(0.8)
 	player.body:setFixedRotation(true)
 	player.health = 100
+	player.inventory = {}
 
 	jumpCooldown = 0.5 --jump cooldown in seconds
 	jumpCountdown = 0 --counter for said jump, don't touch
