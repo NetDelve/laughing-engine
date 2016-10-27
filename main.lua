@@ -1,6 +1,6 @@
-require "binser"
-require "LUBE"
-suit = require "suit"
+require "libs/binser"
+require "libs/LUBE"
+suit = require "libs/suit"
 
 function round(num, idp)
   local mult = 10^(idp or 0)
