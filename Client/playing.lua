@@ -11,6 +11,7 @@ function load( ip, name )
 	client = lube.client()
 	client:setHandshake("chillout")
 	client:setCallback(onReceive)
+	client:connect(ip, 18025)		
 
 	client:send( "name" .. name)
 end
