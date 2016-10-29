@@ -13,4 +13,6 @@ images.hunger1 = love.graphics.newImage("images/hunger1.png")
 images.hunger2 = love.graphics.newImage("images/hunger2.png")
 images.hunger3 = love.graphics.newImage("images/hunger3.png")
 images.hunger4 = love.graphics.newImage("images/hunger4.png")
+images.berrybush = love.graphics.newImage("images/berrybush.png")
+images.berry = love.graphics.newImage("images/berry.png")
 return images
