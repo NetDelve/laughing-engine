@@ -13,7 +13,7 @@ while curLength < mapgen.length do
 
 		if curDepth == -1 then
 			map[table.maxn(map)].sprite = images.berrybush
-			map[table.maxn(map)].shape:setSensor(true)
+			--map[table.maxn(map)].shape:setSensor(true)
 		elseif curDepth <= 0 then
 			map[table.maxn(map)].sprite = images.grass
 		elseif curDepth > 0 and curDepth <= math.random(4,7) then
