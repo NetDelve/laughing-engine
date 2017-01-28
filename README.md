@@ -1,20 +1,28 @@
 #This is basicly a Terarria clone.
 
 #Todo List
-~ version 1.5 ~
-## Multiplayer
+## Multiplayer/Networking
 
-- fully functioning multiplayer
-- local server hosting and joining (client/server)
-- name tags (usernames)
+-A bunch of stuff
+      -server app 
+      -client app
+      -syncing 
+      - name tags (usernames)
 
 ## Game functions
 ### Stuff
 
 - ~~breaking blocks~~
+- more blocks
+- time function
+- npcs
+  -bad 
+  -good
+  -animals
 
 ### player
 
+- inventory 
 - health
 - hunger
 
@@ -25,5 +33,6 @@
 
 ## Graphics
 
-- changeable player modes
-
+- changeable player modles
+- clouds
+- sun/moon
