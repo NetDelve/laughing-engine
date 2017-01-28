@@ -1,7 +1,7 @@
 #This is basicly a Terarria clone.
 
 #Todo List
-~ version 1.5 ~
+~ version 1.6 ~
 ## Multiplayer
 
 - fully functioning multiplayer
@@ -15,6 +15,7 @@
 
 ### player
 
+- STOP THE PLAYER FROM GETTING CAUGHT ON BLOCK EDGES
 - health
 - hunger
 

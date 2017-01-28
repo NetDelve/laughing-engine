@@ -56,7 +56,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
 			--jump
 			if jumpCountdown <= 0 then
-				player.body:applyForce(0, -10000)
+				player.body:applyForce(0, -100000)
 				jumpCountdown = jumpCooldown
 			end
 		elseif love.keyboard.isDown("s") then
@@ -68,6 +68,12 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		elseif love.keyboard.isDown("d") then
 			player.body:applyForce(1000, 0)
 			playerMirrored = true
+		end
+		playerVelocityX, playerVelocityY = player.body:getLinearVelocity()
+		if playerVelocityX > 150 then --crude max speed for player
+			player.body:setLinearVelocity(150, playerVelocityY)
+		elseif playerVelocityX < -150 then
+			player.body:setLinearVelocity(-150, playerVelocityY)
 		end
 		cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
 
@@ -101,17 +107,19 @@ function love.draw()
 		love.graphics.setBackgroundColor(135, 206, 235)
 		for i,v in ipairs(map) do
 			if v.body:getX() + cam.x > -50 and v.body:getX() + cam.x < love.graphics.getWidth() and v.body:getY() + cam.y > -59 and v.body:getY() + cam.y < love.graphics.getHeight() then
-				if v.sprite == images.grass then
-					love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y - 9) --grass block is a bit taller than the rest of the blocks
-				else
-					love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
-				end
-				if debugMode then
-					love.graphics.setColor(255,255,255)
+				if not v.noPhysics then
 					if v.sprite == images.grass then
-						love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y - 9, blockSize.x, blockSize.y) --grass block is a bit taller than the rest of the blocks
+						love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y - 9) --grass block is a bit taller than the rest of the blocks
 					else
-						love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y, blockSize.x, blockSize.y) --draw blocks
+						love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
+					end
+					if debugMode then
+						love.graphics.setColor(255,255,255)
+						if v.sprite == images.grass then
+							love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y - 9, blockSize.x, blockSize.y) --grass block is a bit taller than the rest of the blocks
+						else
+							love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y, blockSize.x, blockSize.y) --draw blocks
+						end
 					end
 				end
 			end
