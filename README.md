@@ -1,8 +1,13 @@
 #This is basicly a Terarria clone.
 
 #Todo List
+<<<<<<< HEAD
 ~ version 0.0.8 ~
 ## Multiplayer/Networking
+=======
+~ version 1.6 ~
+## Multiplayer
+>>>>>>> origin/LUBE
 
 -A bunch of stuff
       -server app 
@@ -23,7 +28,11 @@
 
 ### player
 
+<<<<<<< HEAD
 - inventory 
+=======
+- STOP THE PLAYER FROM GETTING CAUGHT ON BLOCK EDGES
+>>>>>>> origin/LUBE
 - health
 - hunger
 
