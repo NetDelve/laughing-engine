@@ -1,6 +1,7 @@
 #This is basicly a Terarria clone.
 
 #Todo List
+~ version 0.0.8 ~
 ## Multiplayer/Networking
 
 -A bunch of stuff
