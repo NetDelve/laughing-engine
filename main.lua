@@ -100,10 +100,20 @@ function love.draw()
 	if not atMenu then
 		love.graphics.setBackgroundColor(135, 206, 235)
 		for i,v in ipairs(map) do
-			if v.sprite == images.grass then
-				love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y - 9) --grass block is a bit taller than the rest of the blocks
-			else
-				love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
+			if v.body:getX() + cam.x > -50 and v.body:getX() + cam.x < love.graphics.getWidth() and v.body:getY() + cam.y > -59 and v.body:getY() + cam.y < love.graphics.getHeight() then
+				if v.sprite == images.grass then
+					love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y - 9) --grass block is a bit taller than the rest of the blocks
+				else
+					love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
+				end
+				if debugMode then
+					love.graphics.setColor(255,255,255)
+					if v.sprite == images.grass then
+						love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y - 9, blockSize.x, blockSize.y) --grass block is a bit taller than the rest of the blocks
+					else
+						love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y, blockSize.x, blockSize.y) --draw blocks
+					end
+				end
 			end
 		end
 		if not playerMirrored then
@@ -144,6 +154,13 @@ function love.textinput(t)
     suit.textinput(t)
 end
 
-function love.keypressed(key)
+function love.keypressed(key, scancode, isRepeat)
     suit.keypressed(key)
+	if key == "f3" then
+		if debugMode then
+			debugMode = false
+		else
+			debugMode = true
+		end
+	end
 end
