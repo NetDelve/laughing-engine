@@ -2,10 +2,9 @@
 
 #Todo List
 <<<<<<< HEAD
+
 ~ version 0.0.8 ~
-## Multiplayer/Networking
-=======
-~ version 1.6 ~
+
 ## Multiplayer
 >>>>>>> origin/LUBE
 
