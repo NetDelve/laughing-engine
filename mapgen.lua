@@ -41,23 +41,35 @@ elseif mapgen.generator == "normal" then
 		else
 			table.insert(map, {noPhysics = true, x = curLength*blockSize.x, y = curDepth*blockSize.y, addSizeX = 50, addSizeY = 0})
 		end
+		map[table.maxn(map)].sprite = images.grass
 
-		if curDepth == -1 then
-			map[table.maxn(map)].sprite = images.berrybush
-			--map[table.maxn(map)].shape:setSensor(true)
-		elseif curDepth <= 0 then
-			map[table.maxn(map)].sprite = images.grass
-		elseif curDepth > 0 and curDepth <= math.random(4,7) then
-			map[table.maxn(map)].sprite = images.dirt
-		else
-			map[table.maxn(map)].sprite = images.stone
+		fillDepth = curDepth + 1
+		while fillDepth < mapgen.depth do
+			if fillDepth > -1 then 
+				table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, fillDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
+				map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
+				map[table.maxn(map)].fixture:setFriction(1)
+			else
+				table.insert(map, {noPhysics = true, x = curLength*blockSize.x, y = fillDepth*blockSize.y, addSizeX = 50, addSizeY = 0})
+			end
+			if fillDepth == -1 then
+				map[table.maxn(map)].sprite = images.berrybush
+				--map[table.maxn(map)].shape:setSensor(true)
+			elseif fillDepth <= 0 then
+				map[table.maxn(map)].sprite = images.grass
+			elseif fillDepth > 0 and fillDepth <= math.random(4,7) then
+				map[table.maxn(map)].sprite = images.dirt
+			else
+				map[table.maxn(map)].sprite = images.stone
+			end
+			fillDepth = fillDepth + 1
 		end
 		curLength = curLength + 1
-		noise = love.math.noise(mapgen.seed)
-		if noise > 0.7 and curDepth < -1 then
-			curDepth = curDepth + 1
-		elseif noise < 0.3 then
+		noise = love.math.noise(mapgen.seed/0.66, curLength, curDepth)
+		if noise > 0.8 and curDepth > 0 then
 			curDepth = curDepth - 1
+		elseif noise < 0.2 and curDepth < 4 then
+			curDepth = curDepth + 1
 		end
 	end
 end

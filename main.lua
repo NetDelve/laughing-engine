@@ -30,7 +30,7 @@ function love.load()
 	world = love.physics.newWorld(0, 9.81*100, true) --create a world for the bodies to exist in with horizontal gravity of 0 and vertical gravity of 9.81
 
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
-	mapgen = {length = 100, depth = 50, generator = "flat", seed = os.time()} --the length and depth of the map in blocks, as required by the map generator
+	mapgen = {length = 100, depth = 50, generator = "normal", seed = os.time()} --the length and depth of the map in blocks, as required by the map generator
 
 	require "images"
 
