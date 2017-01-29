@@ -1,15 +1,19 @@
 curLength = 0
 while curLength < mapgen.length do
-	foodChance = math.random(0,10)
+	foodChance = math.random(0,15)
 	if foodChance == 0 then
 		curDepth = -1
 	else
 		curDepth = 0
 	end
 	while curDepth < mapgen.depth do
-		table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, curDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
-		map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
-		map[table.maxn(map)].fixture:setFriction(1)
+		if curDepth > -1 then 
+			table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, curDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
+			map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
+			map[table.maxn(map)].fixture:setFriction(1)
+		else
+			table.insert(map, {noPhysics = true, x = curLength*blockSize.x, y = curDepth*blockSize.y})
+		end
 
 		if curDepth == -1 then
 			map[table.maxn(map)].sprite = images.berrybush

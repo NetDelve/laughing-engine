@@ -9,8 +9,12 @@ end
 
 function isBlockAtLocation(x, y)
 	for i,v in ipairs(map) do
-		if v.body:getX() == x and v.body:getY() == y then
-			return i, true
+		if not v.noPhysics then
+			if v.body:getX() == x and v.body:getY() == y then
+				return i, true
+			end
+		else
+			--remove nophysics objects here
 		end
 	end
 	return false
@@ -106,15 +110,15 @@ function love.draw()
 	if not atMenu then
 		love.graphics.setBackgroundColor(135, 206, 235)
 		for i,v in ipairs(map) do
-			if v.body:getX() + cam.x > -50 and v.body:getX() + cam.x < love.graphics.getWidth() and v.body:getY() + cam.y > -59 and v.body:getY() + cam.y < love.graphics.getHeight() then
-				if not v.noPhysics then
+			if not v.noPhysics then
+				if v.body:getX() + cam.x > -50 and v.body:getX() + cam.x < love.graphics.getWidth() and v.body:getY() + cam.y > -59 and v.body:getY() + cam.y < love.graphics.getHeight() then
 					if v.sprite == images.grass then
 						love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y - 9) --grass block is a bit taller than the rest of the blocks
 					else
 						love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
 					end
 					if debugMode then
-            love.graphics.print( love.timer.getFPS(), 10, 10 )
+            			love.graphics.print( love.timer.getFPS(), 10, 10 )
 						love.graphics.setColor(255,255,255)
 						if v.sprite == images.grass then
 							love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y - 9, blockSize.x, blockSize.y) --grass block is a bit taller than the rest of the blocks
@@ -123,6 +127,8 @@ function love.draw()
 						end
 					end
 				end
+			else
+				love.graphics.draw(v.sprite, v.x + cam.x, v.y + cam.y)
 			end
 		end
 		if not playerMirrored then
