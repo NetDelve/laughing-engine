@@ -14,7 +14,9 @@ function isBlockAtLocation(x, y)
 				return i, true
 			end
 		else
-			--remove nophysics objects here
+			if v.x == x and v.y == y then
+				return i, true
+			end
 		end
 	end
 	return false
@@ -159,7 +161,9 @@ function love.mousepressed( x, y, button, istouch )
 	elseif button == 2 and not atMenu then
 		i, present = isBlockAtLocation(xRound - camXRound, yRound - camYRound)
 		if present then
-			map[i].body:destroy()
+			if not map[i].noPhysics then
+				map[i].body:destroy()
+			end
 			table.remove(map, i)
 		end
 	end
