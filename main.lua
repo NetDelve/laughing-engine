@@ -114,6 +114,7 @@ function love.draw()
 						love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
 					end
 					if debugMode then
+            love.graphics.print( love.timer.getFPS(), 10, 10 )
 						love.graphics.setColor(255,255,255)
 						if v.sprite == images.grass then
 							love.graphics.rectangle("line", v.body:getX() + cam.x, v.body:getY() + cam.y - 9, blockSize.x, blockSize.y) --grass block is a bit taller than the rest of the blocks

@@ -1,11 +1,15 @@
+suit = require "libs/suit"
+
 --please make this fancy 
 local name = ""
 local ip = ""
 local flag = 1
 
 function love.draw()
+  love.graphics.setBackgroundColor(100, 100, 100)
 	love.graphics.print("ip: " .. ip, 10, 10)
 	love.graphics.print("name: " .. name, 10, 30 )
+  
 end
 
 function love.keypressed( key )
