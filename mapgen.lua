@@ -31,5 +31,33 @@ if mapgen.generator == "flat" then
 		curLength = curLength + 1
 	end
 elseif mapgen.generator == "normal" then
+	curLength = 0
+	curDepth = 0
+	while curLength < mapgen.length do
+		if curDepth > -1 then 
+			table.insert(map, {body = love.physics.newBody(world, curLength*blockSize.x, curDepth*blockSize.y, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
+			map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
+			map[table.maxn(map)].fixture:setFriction(1)
+		else
+			table.insert(map, {noPhysics = true, x = curLength*blockSize.x, y = curDepth*blockSize.y, addSizeX = 50, addSizeY = 0})
+		end
 
+		if curDepth == -1 then
+			map[table.maxn(map)].sprite = images.berrybush
+			--map[table.maxn(map)].shape:setSensor(true)
+		elseif curDepth <= 0 then
+			map[table.maxn(map)].sprite = images.grass
+		elseif curDepth > 0 and curDepth <= math.random(4,7) then
+			map[table.maxn(map)].sprite = images.dirt
+		else
+			map[table.maxn(map)].sprite = images.stone
+		end
+		curLength = curLength + 1
+		noise = love.math.noise(mapgen.seed)
+		if noise > 0.7 and curDepth < -1 then
+			curDepth = curDepth + 1
+		elseif noise < 0.3 then
+			curDepth = curDepth - 1
+		end
+	end
 end
