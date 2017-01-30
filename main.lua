@@ -74,7 +74,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 			end
 			playerMirrored = false
 		elseif love.keyboard.isDown("d") then
-			if player.body:getX() < (mapgen.length*blockSize.x) + 1 then
+			if player.body:getX() + 1.5*blockSize.x < (mapgen.length*blockSize.x) then
 				player.body:applyForce(1000, 0)
 			end
 			playerMirrored = true
