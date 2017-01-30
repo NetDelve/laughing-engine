@@ -12,7 +12,15 @@ end
 function input.getKeyToggle(_name)
 	for i,v in ipairs(input.keyToggles) do
 		if _name == v.name then
-			
+			return v.status, v.key
+		end
+	end
+end
+
+function input.removeKeyToggle(_name)
+	for i,v in ipairs(input.keyToggles) do
+		if _name == v.name then
+			table.remove(input.keyToggles, i)
 		end
 	end
 end
@@ -24,10 +32,10 @@ end
 function input.keypressed(_key)
 	for i,v in ipairs(input.keyToggles) do
 		if _key == v.key then
-			if v.variable then
-				v.variable == false
+			if v.status then
+				v.status == false
 			else
-				v.variable == true
+				v.status == true
 			end
 		end
 	end
