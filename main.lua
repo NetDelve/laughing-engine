@@ -53,6 +53,7 @@ function love.load()
 
 	--inputs
 	input.addKeyToggle("debugMode", "f3")
+	input.addKeyToggle("blockMenu", "e")
 end
 local creativeChk = {text = ""}
 local ipInput = {text = ""}
@@ -151,8 +152,10 @@ function love.draw()
 			love.graphics.draw(images.hunger4, 125, love.graphics.getHeight() -50)
 		end
 		
-		if blockMenuOpen then
-			--draw block menu
+		if input.getKeyToggle("blockMenu") then
+			love.graphics.setColor(100,100,100,100)
+			love.graphics.rectangle("fill", 100, 100, love.graphics.getWidth() - 200, love.graphics.getHeight() -200)
+			love.graphics.setColor(255,255,255,255)
 		end
 	else
 		suit.draw()
@@ -186,11 +189,4 @@ end
 function love.keypressed(key, scancode, isRepeat)
     suit.keypressed(key)
 	input.keypressed(key)
-	if key == "e" then
-		if blockMenuOpen then
-			blockMenuOpen = false
-		else
-			blockMenuOpen = true
-		end
-	end
 end
