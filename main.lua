@@ -32,7 +32,6 @@ function love.load()
 
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
 	mapgen = {length = 100, depth = 50, generator = "normal", seed = os.time()} --the length and depth of the map in blocks, as required by the map generator
-	print(os.time())
 	require "images"
 
 	cam = {x = 0, y = 0}
@@ -50,6 +49,8 @@ function love.load()
 	atMenu = true
 
 	totalHealth = 100
+
+	curBlock = images.stone --default block player is holding
 
 	--inputs
 	input.addKeyToggle("debugMode", "f3")
@@ -157,6 +158,8 @@ function love.draw()
 			love.graphics.rectangle("fill", 100, 100, love.graphics.getWidth() - 200, love.graphics.getHeight() -200)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.draw(images.stone, 150, 150)
+			love.graphics.draw(images.dirt, 250, 150)
+			love.graphics.draw(images.grass, 350, 150 - 9) --grass block is taller than normal
 		end
 	else
 		suit.draw()
@@ -164,21 +167,31 @@ function love.draw()
 end
 
 function love.mousepressed( x, y, button, istouch )
+	if not input.getKeyToggle("blockMenu") then
 	x, y = x - 25, y - 25
 	xRound, yRound = blockSize.x*round(x/blockSize.x, 0), blockSize.y*round(y/blockSize.y, 0)
 	camXRound, camYRound = blockSize.x*round(cam.x/blockSize.x, 0), blockSize.y*round(cam.y/blockSize.y, 0)
-	if button == 1  and not atMenu  and not isBlockAtLocation(xRound - camXRound, yRound - camYRound) then
-		table.insert(map, {body = love.physics.newBody(world, xRound - camXRound, yRound - camYRound, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
-		map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
-		map[table.maxn(map)].fixture:setFriction(1)
-		map[table.maxn(map)].sprite = images.stone
-	elseif button == 2 and not atMenu then
-		i, present = isBlockAtLocation(xRound - camXRound, yRound - camYRound)
-		if present then
-			if not map[i].noPhysics then
-				map[i].body:destroy()
+		if button == 1  and not atMenu  and not isBlockAtLocation(xRound - camXRound, yRound - camYRound) then
+			table.insert(map, {body = love.physics.newBody(world, xRound - camXRound, yRound - camYRound, "static"), shape = love.physics.newRectangleShape(blockSize.x, blockSize.y)})
+			map[table.maxn(map)].fixture = love.physics.newFixture(map[table.maxn(map)].body, map[table.maxn(map)].shape)
+			map[table.maxn(map)].fixture:setFriction(1)
+			map[table.maxn(map)].sprite = curBlock
+		elseif button == 2 and not atMenu then
+			i, present = isBlockAtLocation(xRound - camXRound, yRound - camYRound)
+			if present then
+				if not map[i].noPhysics then
+					map[i].body:destroy()
+				end
+				table.remove(map, i)
 			end
-			table.remove(map, i)
+		end
+	else
+		if x > 150 and x < 150 + blockSize.x and y > 150 and y < 150 + blockSize.y then
+			curBlock = images.stone
+		elseif x > 250 and x < 250 + blockSize.x and y > 150 and y < 150 + blockSize.y then
+			curBlock = images.dirt
+		elseif x > 350 and x < 350 + blockSize.x and y > 150 and y < 150 + blockSize.y then
+			curBlock = images.grass
 		end
 	end
 end
