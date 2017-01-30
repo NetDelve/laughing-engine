@@ -146,12 +146,14 @@ function love.draw()
 			love.graphics.draw(images.health4, 50, love.graphics.getHeight() -50)
 			love.graphics.draw(images.hunger4, 125, love.graphics.getHeight() -50)
 		end
+		
+		if blockMenuOpen then
+			--draw block menu
+		end
 	else
 		suit.draw()
 	end
 end
-
-
 
 function love.mousepressed( x, y, button, istouch )
 	x, y = x - 25, y - 25
@@ -184,6 +186,12 @@ function love.keypressed(key, scancode, isRepeat)
 			debugMode = false
 		else
 			debugMode = true
+		end
+	elseif key == "e" then
+		if blockMenuOpen then
+			blockMenuOpen = false
+		else
+			blockMenuOpen = true
 		end
 	end
 end
