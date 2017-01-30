@@ -68,11 +68,15 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		elseif love.keyboard.isDown("s") then
 			--crouch
 		end
-		if love.keyboard.isDown("a") then
-			player.body:applyForce(-1000, 0)
+		if love.keyboard.isDown("a") then 
+			if player.body:getX() > 0 then
+				player.body:applyForce(-1000, 0)
+			end
 			playerMirrored = false
 		elseif love.keyboard.isDown("d") then
-			player.body:applyForce(1000, 0)
+			if player.body:getX() < (mapgen.length*blockSize.x) + 1 then
+				player.body:applyForce(1000, 0)
+			end
 			playerMirrored = true
 		end
 		playerVelocityX, playerVelocityY = player.body:getLinearVelocity()
