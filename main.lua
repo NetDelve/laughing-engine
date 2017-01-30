@@ -54,11 +54,13 @@ function love.load()
 
 	--inputs
 	input.addKeyToggle("debugMode", "f3")
-	input.addKeyToggle("blockMenu", "e")
+	input.addKeyToggle("blockMenu", "t")
+	input.addKeyToggle("inventory", "e")
 end
 local creativeChk = {text = ""}
 local ipInput = {text = ""}
 local mapLengthInput = {text = "100"}
+local mapIsFlatInput = {text = ""}
 local mapSeedInput = {text = tostring(os.time())}
 function love.update(dt) --dt = delta time, used for framerate-independent timing
 	if not atMenu then
@@ -112,6 +114,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		suit.Input(mapLengthInput, 125,250,200,30)
     	suit.Label("Map Length", {align="left"}, 50,250,75,30)
 		mapgen.length = tonumber(mapLengthInput.text)
+		
 		suit.Input(mapSeedInput, 125, 300, 200, 30)
 		suit.Label("Map Seed", 50, 300, 75, 30)
 		mapgen.seed = tonumber(mapSeedInput.text)
@@ -146,6 +149,9 @@ function love.draw()
 			else
 				love.graphics.draw(v.sprite, v.x + cam.x, v.y + cam.y)
 			end
+		end
+		if player.body:getY() > 5 then
+			--add bottom of screen gradient here
 		end
 		if not playerMirrored then
 			love.graphics.draw(images.player, player.body:getX() + cam.x + 25, player.body:getY() + cam.y + 25, player.body:getAngle(), 1, 1, images.player:getWidth()/2, images.player:getHeight()/2)
