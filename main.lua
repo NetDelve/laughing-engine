@@ -32,7 +32,7 @@ function love.load()
 
 	map = {} --Array containing arrays that contain x and y screen cordinate values for the blocks
 	mapgen = {length = 100, depth = 50, generator = "normal", seed = os.time()} --the length and depth of the map in blocks, as required by the map generator
-
+	print(os.time())
 	require "images"
 
 	cam = {x = 0, y = 0}
@@ -156,6 +156,7 @@ function love.draw()
 			love.graphics.setColor(100,100,100,100)
 			love.graphics.rectangle("fill", 100, 100, love.graphics.getWidth() - 200, love.graphics.getHeight() -200)
 			love.graphics.setColor(255,255,255,255)
+			love.graphics.draw(images.stone, 150, 150)
 		end
 	else
 		suit.draw()

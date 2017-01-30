@@ -1,3 +1,4 @@
+math.randomseed(mapgen.seed)
 if mapgen.generator == "flat" then
 	curLength = 0
 	while curLength < mapgen.length do
@@ -65,7 +66,7 @@ elseif mapgen.generator == "normal" then
 			fillDepth = fillDepth + 1
 		end
 		curLength = curLength + 1
-		noise = love.math.noise(mapgen.seed/0.66, curLength, curDepth)
+		noise = love.math.noise(math.random(), math.random())
 		if noise > 0.8 and curDepth > 0 then
 			curDepth = curDepth - 1
 		elseif noise < 0.2 and curDepth < 4 then
