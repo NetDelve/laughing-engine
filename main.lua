@@ -1,6 +1,7 @@
 require "libs/binser"
 require "libs/LUBE"
 suit = require "libs/suit"
+require "input"
 
 function round(num, idp)
   local mult = 10^(idp or 0)
@@ -49,6 +50,9 @@ function love.load()
 	atMenu = true
 
 	totalHealth = 100
+
+	--inputs
+	input.addKeyToggle("debugMode", "f3")
 end
 local creativeChk = {text = ""}
 local ipInput = {text = ""}
@@ -123,7 +127,7 @@ function love.draw()
 					else
 						love.graphics.draw(v.sprite, v.body:getX() + cam.x, v.body:getY() + cam.y) --draw blocks
 					end
-					if debugMode then
+					if input.getKeyToggle("debugMode") then
             			love.graphics.print( love.timer.getFPS(), 10, 10 )
 						love.graphics.setColor(255,255,255)
 						if v.sprite == images.grass then
@@ -181,13 +185,8 @@ end
 
 function love.keypressed(key, scancode, isRepeat)
     suit.keypressed(key)
-	if key == "f3" then
-		if debugMode then
-			debugMode = false
-		else
-			debugMode = true
-		end
-	elseif key == "e" then
+	input.keypressed(key)
+	if key == "e" then
 		if blockMenuOpen then
 			blockMenuOpen = false
 		else

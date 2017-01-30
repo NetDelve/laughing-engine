@@ -4,7 +4,7 @@ input.mouseToggles = {}
 
 function input.addKeyToggle(_name, _key, _status)
 	if _status ~= true and status ~= false then
-		_status == false
+		_status = false
 	end
 	table.insert(input.keyToggles, {name = _name, key = _key, status = _status})
 end
@@ -33,9 +33,9 @@ function input.keypressed(_key)
 	for i,v in ipairs(input.keyToggles) do
 		if _key == v.key then
 			if v.status then
-				v.status == false
+				v.status = false
 			else
-				v.status == true
+				v.status = true
 			end
 		end
 	end
