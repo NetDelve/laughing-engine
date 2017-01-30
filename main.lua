@@ -62,11 +62,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
 			--jump
 			if jumpCountdown <= 0 then
-<<<<<<< HEAD
-				player.body:applyForce(0, -30000)
-=======
 				player.body:applyLinearImpulse(0, -250)
->>>>>>> origin/LUBE
 				jumpCountdown = jumpCooldown
 			end
 		elseif love.keyboard.isDown("s") then
