@@ -56,7 +56,7 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		if love.keyboard.isDown("w") or love.keyboard.isDown(" ") then
 			--jump
 			if jumpCountdown <= 0 then
-				player.body:applyForce(0, -100000)
+				player.body:applyForce(0, -30000)
 				jumpCountdown = jumpCooldown
 			end
 		elseif love.keyboard.isDown("s") then
@@ -70,10 +70,10 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 			playerMirrored = true
 		end
 		playerVelocityX, playerVelocityY = player.body:getLinearVelocity()
-		if playerVelocityX > 150 then --crude max speed for player
-			player.body:setLinearVelocity(150, playerVelocityY)
-		elseif playerVelocityX < -150 then
-			player.body:setLinearVelocity(-150, playerVelocityY)
+		if playerVelocityX > 500 then --crude max speed for player
+			player.body:setLinearVelocity(500, playerVelocityY)
+		elseif playerVelocityX < -500 then
+			player.body:setLinearVelocity(-500, playerVelocityY)
 		end
 		cam.x, cam.y = love.graphics.getWidth() /2 - player.body:getX() - 25, love.graphics.getHeight() /2 - player.body:getY() - 25
 
