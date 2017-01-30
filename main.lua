@@ -59,6 +59,7 @@ end
 local creativeChk = {text = ""}
 local ipInput = {text = ""}
 local mapLengthInput = {text = "100"}
+local mapSeedInput = {text = tostring(os.time())}
 function love.update(dt) --dt = delta time, used for framerate-independent timing
 	if not atMenu then
 		world:update(dt)
@@ -111,7 +112,10 @@ function love.update(dt) --dt = delta time, used for framerate-independent timin
 		suit.Input(mapLengthInput, 125,250,200,30)
     	suit.Label("Map Length", {align="left"}, 50,250,75,30)
 		mapgen.length = tonumber(mapLengthInput.text)
-		if suit.Button("Host Server", 50,300, 150,30).hit then
+		suit.Input(mapSeedInput, 125, 300, 200, 30)
+		suit.Label("Map Seed", 50, 300, 75, 30)
+		mapgen.seed = tonumber(mapSeedInput.text)
+		if suit.Button("Host Server", 50,350, 150,30).hit then
 			require "mapgen"
         	atMenu = false
     	end
