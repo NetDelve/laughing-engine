@@ -1,4 +1,4 @@
-![screenshot](https://raw.githubusercontent.com/nutcase84/laughing-engine/LUBE/screenshot.png)
+
 
 #This is basicly a Terarria clone.
 
