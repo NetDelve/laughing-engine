@@ -70,8 +70,9 @@ function love.load()
 end
 
 function love.draw()
+	love.graphics.print("hello", 100, 100)
 	drawMessages()
-suit.draw()
+	suit.draw()
 end
 
 function love.update( dt )

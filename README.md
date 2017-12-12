@@ -1,22 +1,20 @@
-# This is basicly a Terarria clone.
+![screenshot](screenshot-vb0_0_1.png)
+
+# laughing-engine
+## General info about the project 
+- **What:** This is basicly just a Terarria clone.
+- **Why:** Why not? 
+- **Name:** The name was the random github provided name.
 
 # Todo List
-
-*version 0.0.0*
-
-# Everything complete restart try and do it right maybe this time?
+*version 0.0.1*
 
 ## Multiplayer
 
--A bunch of stuff
-      -server app 
-      -client app
-      -syncing 
-      - name tags (usernames)
+- Client and Server map syncing
+- Sever IP displayed on the server app
 
 ## Game functions
-- Game Loop
-- Menu
 ### Stuff
 
 - breaking blocks
@@ -30,7 +28,6 @@
 ### player
 
 - inventory 
-- STOP THE PLAYER FROM GETTING CAUGHT ON BLOCK EDGES
 - health
 - hunger
 
@@ -40,7 +37,7 @@
 - sticks
 
 ## Graphics
-
+- Game logo
 - changeable player modles (mostly complete)
 - clouds
 - sun/moon
