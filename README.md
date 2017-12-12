@@ -13,8 +13,16 @@
 
 - Client and Server map syncing
 - Sever IP displayed on the server app
+- Changeable player models
 
 ## Game functions
+- physics
+
+### Map
+- Mapgen
+- time
+- save and load
+
 ### Stuff
 
 - breaking blocks
@@ -25,19 +33,19 @@
   -good
   -animals
 
-### player
+### Player
 
-- inventory 
-- health
-- hunger
+- Inventory 
+- Health
+- Hunger
 
-### items
+### Items
 
-- berries
-- sticks
+- Berries
+- Sticks
 
 ## Graphics
 - Game logo
-- changeable player modles (mostly complete)
-- clouds
-- sun/moon
+- Changeable player models
+- Clouds
+- Sun/Moon
