@@ -12,9 +12,6 @@ local PlayerName = {text = ""}
 
 mapgen = {length = 100, depth = 50, generator = "normal", seed = os.time()}
 
---local name = ""
---local ip = ""
-
 function mainmenu()
 playername = suit.Input(PlayerName, 125,50,200,30)
 suit.Label("Player Name", {align="left"}, 50,50,75,30)
@@ -22,7 +19,9 @@ serverip = suit.Input(ipInput, 125,100,200,30)
 suit.Label("Server IP", {align="left"}, 50,100,75,30)
 if suit.Button("Join Server", 50,150, 150,30).hit then
 atMMenu=false
-playing( serverip, playername )
+local name = PlayerName.text
+local ip = ipInput.text
+playing( ip, name )
 end
 
 suit.Input(mapLengthInput, 125,275,200,30)
