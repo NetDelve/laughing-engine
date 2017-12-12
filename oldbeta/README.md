@@ -4,9 +4,7 @@
 
 #Todo List
 
-*~ version 0.0.0 ~*
-
-#Everything complete restart try and do it right maybe this time?
+*~ version 0.0.8 ~*
 
 ## Multiplayer
 
@@ -17,11 +15,9 @@
       - name tags (usernames)
 
 ## Game functions
-- Game Loop
-- Menu
 ### Stuff
 
-- breaking blocks
+- ~~breaking blocks~~
 - more blocks
 - time function
 - npcs
