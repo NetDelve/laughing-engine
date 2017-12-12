@@ -5,6 +5,7 @@ require "libs/binser"
 require "libs/LUBE"
 suit = require "libs/suit"
 require "input"
+require "menus"
 
 GameRunning = false
 atMMenu = true
@@ -16,11 +17,19 @@ player.name = "Greg"
 
 function main()
 	if atMMenu == true then
-		
+	mainmenu()	
 		
 	else
 	if GameRunning == true then
 		end
 	end
 
+end
+
+function love.update(dt)
+main()
+end
+
+function love.draw()
+suit.draw()
 end
