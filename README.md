@@ -1,12 +1,10 @@
+# This is basicly a Terarria clone.
 
+# Todo List
 
-#This is basicly a Terarria clone.
+*version 0.0.0*
 
-#Todo List
-
-*~ version 0.0.0 ~*
-
-#Everything complete restart try and do it right maybe this time?
+# Everything complete restart try and do it right maybe this time?
 
 ## Multiplayer
 
