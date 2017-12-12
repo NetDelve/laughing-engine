@@ -5,10 +5,13 @@ require 'libs/LUBE'
 require 'libs/TSerial'
 
 HC = require 'libs/HC'
+suit = require "libs/suit"
+
+require "menus"
 
 players = {}
 player_bodys = {}
-
+atMMenu = true
 -- NETWORKING --
 
 function onConnect(id)
@@ -24,7 +27,7 @@ function onReceive(data, id)
 	end
 	
 local speed = 1
-	if players[id].name == "bambo" and data == "left" then speed = 1.1 end
+	--if players[id].name == "tyrone" and data == "left" then speed = 1.1 end
 
 	if data == 'left' then
 		player_bodys[id]:move( -speed, 0 )
@@ -68,9 +71,13 @@ end
 
 function love.draw()
 	drawMessages()
+suit.draw()
 end
 
 function love.update( dt )
+	if atMMenu == true then
+		mainmenu()
+	end
 	Collider:update( dt )
 	server:update(dt)
 

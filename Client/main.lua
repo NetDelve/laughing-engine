@@ -29,7 +29,7 @@ function main()
 end
 
 function love.load()
-
+	logo = love.graphics.newImage("logo.png")
 end
 
 function love.update(dt)
@@ -37,6 +37,7 @@ main()
 end
 
 function love.draw()
+love.graphics.draw(logo, 0, 0)
 suit.draw()
 end
 
