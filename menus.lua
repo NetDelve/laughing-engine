@@ -1,61 +1,41 @@
---require "libs/binser"
---require "libs/LUBE"
+
 suit = require "libs/suit"
 require "input"
 
+local creativeChk = {text = ""}
+local ipInput = {text = ""}
+local mapLengthInput = {text = "100"}
+local mapIsFlatInput = {text = ""}
+local mapSeedInput = {text = tostring(os.time())}
+local PlayerName = {text = ""}
+
 mapgen = {length = 100, depth = 50, generator = "normal", seed = os.time()}
 
--- 
-  -- Menu number 
-  -- 0==nomenu 
-  -- 1==mainmenu 4==options
-  -- 2==serverhost 3==serverjoin
---
-
-
 function mainmenu()
-if suit.Button("Join Server", 200,100, 150,30).hit then
-Menu=3
-end
-if suit.Button("Host Server", 200,150, 150,30).hit then
-Menu=2
-end
-if suit.Button("Options", 200,200, 150,30).hit then
-Menu=4
-end
-if suit.Button("Exit", 200,250, 150,30).hit then
-Menu=0
-end
-end
+suit.Label("Main Menu", {align="center"}, 50,100,75,30)
 
-function joinmenu()
- local ipInput = {text = ""}
- local PlayerName = {text = ""}
 playername = suit.Input(PlayerName, 125,150,200,30)
 suit.Label("Player Name", {align="left"}, 50,150,75,30)
 serverip = suit.Input(ipInput, 125,200,200,30)
 suit.Label("Server IP", {align="left"}, 50,200,75,30)
+
 if suit.Button("Join Server", 50,250, 150,30).hit then
-Menu = 0
+atMMenu=false
 local name = PlayerName.text
 local ip = ipInput.text
 playing( ip, name )
 end
+
+suit.Input(mapLengthInput, 125,300,200,30)
+suit.Label("Map Length", {align="left"}, 50,300,75,30)
+mapgen.length = tonumber(mapLengthInput.text)
+suit.Input(mapSeedInput, 125, 350, 200, 30)
+suit.Label("Map Seed", 50, 350, 75, 30)
+mapgen.seed = tonumber(mapSeedInput.text)
+
+if suit.Button("Host Server", 50,400, 150,30).hit then
+-- require "mapgen"
+atMMenu = false  
 end
 
-function hostmenu()
- local creativeChk = {text = ""}
- local mapLengthInput = {text = "100"}
- local mapIsFlatInput = {text = ""}
- local mapSeedInput = {text = tostring(os.time())}
-suit.Input(mapLengthInput, 125,275,200,30)
-suit.Label("Map Length", {align="left"}, 50,275,75,30)
-mapgen.length = tonumber(mapLengthInput.text)
-suit.Input(mapSeedInput, 125, 325, 200, 30)
-suit.Label("Map Seed", 50, 325, 75, 30)
-mapgen.seed = tonumber(mapSeedInput.text)
-if suit.Button("Host Server", 50,375, 150,30).hit then
--- require "mapgen"
-Menu = 0 
-end
 end
