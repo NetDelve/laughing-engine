@@ -18,7 +18,7 @@ Menu = 1
 -- Menu number 
 -- 0==nomenu 
 -- 1==mainmenu 4==options
--- 2==singleplayer 3==multiplayer 5==serverhost 6==serverjoin
+-- 2==hostmenu 3==joinmenu
 --
 function playing( ip, name )
 	require "playing"
@@ -30,9 +30,20 @@ function main()
 		mainmenu()
 	else
 	if Menu == 2 then
-		singleplayermenu()
+		hostmenu()
+		serverthread = love.thread.newThread("server.lua")
+		playing( "127.0.0.1", "tyrone" )
+	else
+	if Menu == 3 then
+		joinmenu()
+	else
+	if Menu == 4 then
+		
 	else
 	if GameRunning then
+		
+	end
+	end
 	end
 	end
 	end

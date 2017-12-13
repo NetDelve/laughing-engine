@@ -7,11 +7,9 @@ require 'libs/TSerial'
 HC = require 'libs/HC'
 suit = require "libs/suit"
 
-require "menus"
-
 players = {}
 player_bodys = {}
-atMMenu = true
+
 -- NETWORKING --
 
 function onConnect(id)
@@ -70,15 +68,10 @@ function love.load()
 end
 
 function love.draw()
-	love.graphics.print("hello", 100, 100)
 	drawMessages()
-	suit.draw()
 end
 
 function love.update( dt )
-	if atMMenu == true then
-		mainmenu()
-	end
 	Collider:update( dt )
 	server:update(dt)
 
