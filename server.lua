@@ -48,9 +48,9 @@ end
 function onDisconnect(id)
 end
 
-function love.draw()
-  love.graphics.setBackgroundColor(100, 100, 100)
-end
+--function love.draw()
+ -- love.graphics.setBackgroundColor(100, 100, 100)
+--end
 
 -- COLLISION DETECTION --
 function on_collision(dt, shape_one, shape_two, mtv_x, mtv_y)
@@ -67,9 +67,9 @@ function love.load()
 	server:setHandshake("chillout")
 end
 
-function love.draw()
-	drawMessages()
-end
+--function love.draw()
+--	drawMessages()
+--end
 
 function love.update( dt )
 	Collider:update( dt )
@@ -83,11 +83,3 @@ function love.update( dt )
 	server:send( TSerial.pack( players ) )
 end
 
-function love.keypressed( key )
-end
-
-function love.keyreleased( key )
-end
-
-function love.mousepressed( x, y, key )
-end

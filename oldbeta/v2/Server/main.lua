@@ -5,15 +5,14 @@ require 'libs/LUBE'
 require 'libs/TSerial'
 
 HC = require 'libs/HC'
-suit = require "libs/suit"
 
 require "menus"
 
 players = {}
 player_bodys = {}
 atMMenu = true
--- NETWORKING --
 
+-- NETWORKING --
 function onConnect(id)
 	-- we use two different tables for the body and coords, the voords one is what is sent back to the client, the player_bodys is for the serverside Collision detection
 	player_bodys[id] = Collider:addRectangle(1,1, 32,32)
@@ -27,7 +26,6 @@ function onReceive(data, id)
 	end
 	
 local speed = 1
-	--if players[id].name == "tyrone" and data == "left" then speed = 1.1 end
 
 	if data == 'left' then
 		player_bodys[id]:move( -speed, 0 )
@@ -50,9 +48,9 @@ end
 function onDisconnect(id)
 end
 
-function love.draw()
-  love.graphics.setBackgroundColor(100, 100, 100)
-end
+--function love.draw()
+  --love.graphics.setBackgroundColor(100, 100, 100)
+--end
 
 -- COLLISION DETECTION --
 function on_collision(dt, shape_one, shape_two, mtv_x, mtv_y)
@@ -70,15 +68,13 @@ function love.load()
 end
 
 function love.draw()
-	love.graphics.print("hello", 100, 100)
 	drawMessages()
-	suit.draw()
 end
 
 function love.update( dt )
-	if atMMenu == true then
-		mainmenu()
-	end
+	--if atMMenu == true then
+	--	mainmenu()
+	--end
 	Collider:update( dt )
 	server:update(dt)
 
