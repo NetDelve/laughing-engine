@@ -7,6 +7,7 @@ require "libs/TSerial"
 require "libs/LUBE"
 require "input"
 require "menus"
+require "log"
 
 camera = require 'libs/hump/camera'
 vector = require 'libs/hump/vector'
@@ -14,12 +15,14 @@ vector = require 'libs/hump/vector'
 GameRunning = false
 atMMenu = true
 
---thread2 = love.thread.newThread("server.lua")
---thread2:start()
+thread2 = love.thread.newThread("server.lua")
+thread2:start()
+err = thread2:getError()
 
 function playing( ip, name )
 	require "playing"
 	load ( ip, name )
+	log.event("trying to connect to server. :"..ip, "Server General", 0)
 end
 
 function main()
@@ -35,14 +38,15 @@ function love.load()
 end
 
 function love.update(dt)
---thread2:start()
 main()
+--thread2:start()
+err
+if thread2:isRunning() == true then
+log.event("Server Running", "Server General", 0)
+end
 end
 
 function love.draw()
---if thread2:isRunning() == true then
---love.graphics.print("Server Running", 50, 50)
---end
 suit.draw()
 end
 
