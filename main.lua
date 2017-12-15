@@ -17,20 +17,18 @@ atMMenu = true
 
 thread2 = love.thread.newThread("server.lua")
 thread2:start()
-err = thread2:getError()
 
 function playing( ip, name )
 	require "playing"
 	load ( ip, name )
-	log.event("trying to connect to server. :"..ip, "Server General", 0)
+	log.event("trying to connect to server \""..ip.."\"", "general", 0)
 end
 
 function main()
-	if atMMenu == true then		
+	if atMMenu then		
 		mainmenu()
-	else
-	if GameRunning == true then
-	end
+	elseif GameRunning then
+	
 	end
 end
 
@@ -39,22 +37,28 @@ end
 
 function love.update(dt)
 main()
+
+local err = thread2:getError() --Server error reporting
+if err ~= nil then
+	log.event("Server error \""..err.."\"", "server", 3)
+end
+
 --thread2:start()
-err
+--[[err
 if thread2:isRunning() == true then
 log.event("Server Running", "Server General", 0)
-end
+end]]
 end
 
 function love.draw()
-suit.draw()
+	suit.draw()
 end
 
 function love.textinput(t)
-suit.textinput(t)
+	suit.textinput(t)
 end
 
 function love.keypressed(key, scancode, isRepeat)
-suit.keypressed(key)
-input.keypressed(key)
+	suit.keypressed(key)
+	input.keypressed(key)
 end
