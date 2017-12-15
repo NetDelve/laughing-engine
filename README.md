@@ -2,7 +2,7 @@
 
 # laughing-engine
 ## General info about the project 
-- **What:** This is basicly just a Terarria clone.
+- **What:** This is basicly just a Terarria clone. 
 - **Why:** Why not? 
 - **Name:** The name was the random github provided name.
 
@@ -29,9 +29,9 @@
 - more blocks
 - time function
 - npcs
-  -bad 
-  -good
-  -animals
+  - bad 
+  - good
+  - animals
 
 ### Player
 
