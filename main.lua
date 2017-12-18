@@ -12,7 +12,6 @@ require "log"
 camera = require 'libs/hump/camera'
 vector = require 'libs/hump/vector'
 
-GameRunning = false
 atMMenu = true
 
 thread2 = love.thread.newThread("server.lua")
@@ -24,30 +23,18 @@ function playing( ip, name )
 	log.event("trying to connect to server \""..ip.."\"", "general", 0)
 end
 
-function main()
-	if atMMenu then		
-		mainmenu()
-	elseif GameRunning then
-	
-	end
-end
-
 function love.load()
 end
 
 function love.update(dt)
-main()
+if atMMenu then
+mainmenu()
+end
 
 local err = thread2:getError() --Server error reporting
 if err ~= nil then
 	log.event("Server error \""..err.."\"", "server", 3)
 end
-
---thread2:start()
---[[err
-if thread2:isRunning() == true then
-log.event("Server Running", "Server General", 0)
-end]]
 end
 
 function love.draw()

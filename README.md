@@ -2,47 +2,31 @@
 
 # laughing-engine
 ## General info about the project 
-- **What:** This is basicly just a Terarria clone. 
+- **What:** This is basicly just a Terarria clone. The game is written in lua with Love2d and LUBE Networking. 
 - **Why:** Why not? 
 - **Name:** The name was the random github provided name.
+
+If you would like to help out some checkout the Todo list and start working on an item in the list.
+Anything that is **Bold** is important and is one of our current tasks so if you can help with them rad.
 
 # Todo List
 *version 0.0.1*
 
+## Game app
+Okay heres what we need to work on in the game app as of right now. 
+- **Server Running**
+
 ## Multiplayer
-
-- Client and Server map syncing
-- Sever IP displayed on the server app
-- Changeable player models
-
+- 
 ## Game functions
-- physics
-
+- 
 ### Map
-- Mapgen
-- time
-- save and load
-
-### Stuff
-
-- breaking blocks
-- more blocks
-- time function
-- npcs
-  - bad 
-  - good
-  - animals
-
+- 
 ### Player
 
 - Inventory 
 - Health
 - Hunger
-
-### Items
-
-- Berries
-- Sticks
 
 ## Graphics
 - Game logo
