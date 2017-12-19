@@ -18,9 +18,9 @@ thread2 = love.thread.newThread("server.lua")
 thread2:start()
 
 function playing( ip, name )
+	log.event("trying to connect to server \""..ip.."\"", "general", 0)
 	require "playing"
 	load ( ip, name )
-	log.event("trying to connect to server \""..ip.."\"", "general", 0)
 end
 
 function love.load()

@@ -4,11 +4,15 @@ require 'libs/math'
 require 'libs/LUBE'
 require 'libs/TSerial'
 
+require 'log'
+
 HC = require 'libs/HC'
 suit = require "libs/suit"
 
 players = {}
 player_bodys = {}
+
+log.event("Server started on other thread", "server", 0)
 
 -- NETWORKING --
 
@@ -19,14 +23,21 @@ function onConnect(id)
 end
 
 function onReceive(data, id)
+	--log.event("Player \"".. players[id].name.."\" sent data \""..data.."\"", "server", 0)
 	if string.find(data, "name") then
-		local player_name = string.sub(data, "5")
-		players[id].name = player_name
+	local player_name = string.sub(data, "5")
+	players[id].name = player_name
 	end
 	
 local speed = 1
-	--if players[id].name == "tyrone" and data == "left" then speed = 1.1 end
-
+	
+	if data == 'Test Connect' then
+	server:send('you connected')
+	log.event("Player \"".. players[id].name.."\" Connected", "server", 0)
+	end
+	
+	if players[id].name == "tyrone" and data == "left" then speed = 1.1 end
+	
 	if data == 'left' then
 		player_bodys[id]:move( -speed, 0 )
 	elseif data == 'right' then
@@ -46,6 +57,7 @@ local speed = 1
 end
 
 function onDisconnect(id)
+log.event("Player \"".. players[id].name.."\" Disconnected", "server", 0)
 end
 
 --function love.draw()

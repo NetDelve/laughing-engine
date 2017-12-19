@@ -1,27 +1,49 @@
 players = {}
 
+connected = false
+serverport = 18025
+serverip = "127.0.0.1"
+
 function onReceive(data)
-	players = TSerial.unpack( data )
+	if connected == true then
+		players = TSerial.unpack( data )
+	else
+	if data == 'you connected' then
+		log.event("Connected to \""..serverip.."\" on port \""..serverport.."\"", "general", 0)
+		connected = true
+	end
+	end
 end
 
 function load( ip, name )
-
+--serverport = 18025
+serverip = ip
 	cam = camera(vector(256, 208), 1)
 	love.graphics.setBackgroundColor( 50, 50, 50 )
 
 	client = lube.client()
 	client:setHandshake("chillout")
 	client:setCallback(onReceive)
-	client:connect(ip, 18025)	
-
-	client:send( "name" .. name)
+	if client:connect(ip, serverport) then
+		log.event("Connecting to \""..ip.."\" on port \""..serverport.."\"", "general", 0)
+		client:send( "name" .. name)
+		client:send('Test Connect')
+	end 
 end
 
 function love.draw()
 	cam:attach()
 		for k, v in pairs(players) do
+		if v.name == name then
+			love.graphics.setColor(0,200,75)
+			love.graphics.rectangle('fill', v.x, v.y, 32, 32)
+			love.graphics.print(v.name, v.x-10, v.y-20)
+			log.event("found your client \""..name.."\"", "general", 0)
+		else
+		love.graphics.setColor(255,255,255)
 		love.graphics.rectangle('fill', v.x, v.y, 32, 32)
 		love.graphics.print(v.name, v.x-10, v.y-20)
+		end
 		end
 	cam:detach()
 
