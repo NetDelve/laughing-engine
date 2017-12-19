@@ -33,27 +33,29 @@ end
 
 function love.draw()
 	cam:attach()
-		for k, v in pairs(players) do
-		if v.name == name then
-			love.graphics.setColor(0,200,75)
-			love.graphics.rectangle('fill', v.x, v.y, 32, 32)
-			love.graphics.print(v.name, v.x-10, v.y-20)
-			log.event("found your client \""..name.."\"", "general", 0)
-		else
-		love.graphics.setColor(255,255,255)
+	
+	for k, v in pairs(players) do
+	if v.name == name then -- tried to make clients player square diffrent from the other players
+		love.graphics.setColor(0,200,75)
 		love.graphics.rectangle('fill', v.x, v.y, 32, 32)
 		love.graphics.print(v.name, v.x-10, v.y-20)
-		end
-		end
+		log.event("found your client \""..name.."\"", "general", 0)
+	else
+	love.graphics.setColor(255,255,255)
+	love.graphics.rectangle('fill', v.x, v.y, 32, 32)
+	love.graphics.print(v.name, v.x-10, v.y-20)
+	end
+	love.graphics.setColor(255,255,255)
+	end
+	
 	cam:detach()
 
 	-- debug
-	drawMessages()
+	-- drawMessages()
 	love.graphics.print( love.timer.getFPS(), 10, 10 )
 end
 
 function love.update( dt )
-	-- Collider:update( dt )
 	client:update(dt)
 
 	if love.keyboard.isDown('a') or love.keyboard.isDown('left') then

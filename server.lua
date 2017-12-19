@@ -60,10 +60,6 @@ function onDisconnect(id)
 log.event("Player \"".. players[id].name.."\" Disconnected", "server", 0)
 end
 
---function love.draw()
- -- love.graphics.setBackgroundColor(100, 100, 100)
---end
-
 -- COLLISION DETECTION --
 function on_collision(dt, shape_one, shape_two, mtv_x, mtv_y)
     shape_one:move(mtv_x/2, mtv_y/2)
@@ -79,17 +75,12 @@ function love.load()
 	server:setHandshake("chillout")
 end
 
---function love.draw()
---	drawMessages()
---end
-
 function love.update( dt )
 	Collider:update( dt )
 	server:update(dt)
 
-	-- update the values to be sent across the network, we do this so the collision detection system is seperate :D
 	for k, v in pairs( players ) do
-		v.x,v.y = player_bodys[k]:center()
+	v.x,v.y = player_bodys[k]:center()
 	end
 
 	server:send( TSerial.pack( players ) )

@@ -13,8 +13,8 @@ Anything that is **Bold** is important and is one of our current tasks so if you
 *version 0.0.1*
 
 ## Game app
-Okay heres what we need to work on in the game app as of right now. 
-- **Server Running**
+- **Server Thread Running** It starts but it doesn't continue to run. 
+- Improve the menu item positions.
 
 ## Multiplayer
 - 
@@ -23,11 +23,7 @@ Okay heres what we need to work on in the game app as of right now.
 ### Map
 - 
 ### Player
-
-- Inventory 
-- Health
-- Hunger
-
+- 
 ## Graphics
 - Game logo
 - Changeable player models
