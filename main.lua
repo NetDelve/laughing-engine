@@ -30,13 +30,13 @@ function love.update(dt)
 if atMMenu then
 mainmenu()
 end
-if thread2:isRunning() == true then
-log.event("Server running", "general", 0)
-end
-local err = thread2:getError() --Server error reporting
-if err ~= nil then
-	log.event("Server error \""..err.."\"", "server", 3)
-end
+--if thread2:isRunning() == true then
+--log.event("Server running", "general", 0)
+--end
+--local err = thread2:getError() --Server error reporting
+--if err ~= nil then
+--	log.event("Server error \""..err.."\"", "server", 3)
+--end
 end
 
 function love.draw()
